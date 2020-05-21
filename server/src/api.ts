@@ -66,9 +66,13 @@ export class Api {
     const api = server.build();
     const port = Number(process.env.PORT) || 3003;
 
+    const config = JSON.parse(
+      readFileSync(path.join(__dirname, '../config.json'), 'utf8'),
+    );
+
     const ssl = {
-      key: readFileSync('C:\\Users\\tanne\\server.key'),
-      cert: readFileSync('C:\\Users\\tanne\\server.cert'),
+      key: readFileSync(config.ssl.key, 'utf8'),
+      cert: readFileSync(config.ssl.cert, 'utf8'),
     };
 
     const httpsServer = https.createServer(ssl, api);
